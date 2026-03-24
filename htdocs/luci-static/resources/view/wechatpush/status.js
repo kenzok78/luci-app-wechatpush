@@ -12,7 +12,6 @@ var callServiceList = rpc.declare({
 
 function getServiceStatus() {
     return L.resolveDefault(callServiceList('wechatpush'), {}).then(function (res) {
-        console.log(res);
         var isRunning = false;
         try {
             isRunning = res['wechatpush']['instances']['instance1']['running'];
