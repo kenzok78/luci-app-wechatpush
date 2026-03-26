@@ -86,10 +86,7 @@ return view.extend({
 	},
 
 	render: function (data) {
-		if (fwtool.checkLegacySNAT())
-			return fwtool.renderMigration();
-		else
-			return this.renderForwards(data);
+		return this.renderForwards(data);
 	},
 
 	renderForwards: function (data) {
@@ -99,7 +96,7 @@ return view.extend({
 
 		m = new form.Map('wechatpush', _('WeChat push'), _('A tool that can push device messages from OpenWrt to a mobile phone via WeChat or Telegram.<br /><br />If you encounter any issues while using it, please submit them here:') + '<a href="https://github.com/tty228/luci-app-wechatpush" target="_blank">' + _('GitHub Project Address') + '</a>');
 
-		s = m.section(form.TypedSection);
+		s = m.section(form.TypedSection, '_status');
 		s.anonymous = true;
 		s.render = function () {
 			var statusView = E('p', { id: 'service_status' }, _('Collecting data ...'));
@@ -129,6 +126,7 @@ return view.extend({
 
 		// 基本设置
 		o = s.taboption('basic', form.Flag, 'enable', _('Enabled'));
+		o.rmempty = false;
 
 		o = s.taboption('basic', cbiRichListValue, 'jsonpath', _('Push Mode'));
 		o.value('', _('Close'),
